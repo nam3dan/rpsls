@@ -24,6 +24,7 @@ class Game:
             human_count = min(int(input("\nPlease enter number of humans (0|1|2): ")),2)
         except:
             print("Invalid Entry. Please type only either 1, 2 0r 3")
+            human_count = 0
             self.number_of_humans()
         if human_count == 0:
             self.player1 = AI()
@@ -76,6 +77,7 @@ Best out of ''' + str(self.rounds) + ''' wins.''')
 
     def run_game(self):
         round_counter = 0
+        tie_counter = 0
         while self.players[0].score < self.rounds/2 and self.players[1].score < self.rounds/2:
             round_counter += 1
             print('\nRound ' + str(round_counter))
@@ -85,6 +87,7 @@ Best out of ''' + str(self.rounds) + ''' wins.''')
             p2_attack = self.player2.selected_attack
             if p1_attack == p2_attack:
                 winner = "void"
+                tie_counter += 1
             else:
                 try:
                     action = master_rule_dict[p1_attack][p2_attack]
@@ -100,7 +103,7 @@ Best out of ''' + str(self.rounds) + ''' wins.''')
                 print("\n{}{}{}. {} wins!".format(p1_attack,action,p2_attack,winner))
             else:
                 print("\n{}{}{}. {} wins!".format(p2_attack,action,p1_attack,winner))
-            time.sleep(3)
+            time.sleep(2)
             print('\nCurrent Score: \n' + self.player1.name + ' : ' + str(self.player1.score) + '\n' + self.player2.name + ''' : ''' + str(self.player2.score))
             time.sleep(3)
         if self.player1.score > self.player2.score:
@@ -110,5 +113,5 @@ Best out of ''' + str(self.rounds) + ''' wins.''')
             winner = self.player2.name
             score = str(self.player2.score)
         
-        print("{} won {} games out of {}".format(winner,score,self.rounds))
+        print("\n{} WINS!!!!! {} won {} games out of {}. There were {} ties and {} total rounds.".format(winner.upper(),winner,score,self.rounds, tie_counter, round_counter))
 
