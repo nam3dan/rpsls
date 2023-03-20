@@ -2,7 +2,7 @@ from human import Human
 from ai import AI
 import time
 
-master_rule_dict = {"Rock":{"Scissors":" Crushes ","Lizard":" Crushes"},
+master_rule_dict = {"Rock":{"Scissors":" Crushes ","Lizard":" Crushes "},
                     "Paper":{"Rock":" Covers ","Spock":" Disproves "},
                     "Scissors":{"Paper":" Cuts ","Lizard":" Decapitates "},
                     "Lizard":{"Spock":" Poisons ","Paper":" Eats "},
@@ -21,7 +21,7 @@ class Game:
     
     def number_of_humans(self):
         try:
-            human_count = int(input("\nPlease enter number of humans (0|1|2): "))
+            human_count = min(int(input("\nPlease enter number of humans (0|1|2): ")),2)
         except:
             print("Invalid Entry. Please type only either 1, 2 0r 3")
             self.number_of_humans()
@@ -49,15 +49,16 @@ class Game:
         return number_of_rounds
     
     def print_game_rules(self):
-        print('''The Rules of the Game are simple:
+        print('''\n\nThe Rules of the Game are simple:
 You will from one of 5 options:
 1. Rock
 2. Paper
 3. Scisors
 4. Lizard
-5. Spock''')
+5. Spock
+''')
         time.sleep(5)
-        print('''Similar to RPS, here are the attack hierarchy:
+        print('''\nSimilar to RPS, here are the attack hierarchy:
 
 Rock crushes Scissors
 Scissors cuts Paper 
@@ -71,7 +72,8 @@ Paper disproves Spock
 Spock vaporizes Rock
 
 Best out of ''' + str(self.rounds) + ''' wins.''')
-    
+        time.sleep(5)
+
     def run_game(self):
         round_counter = 0
         while self.players[0].score < self.rounds/2 and self.players[1].score < self.rounds/2:
@@ -81,16 +83,32 @@ Best out of ''' + str(self.rounds) + ''' wins.''')
             self.player2.choose_attack()
             p1_attack = self.player1.selected_attack
             p2_attack = self.player2.selected_attack
-            try:
-                action = master_rule_dict[p1_attack][p2_attack]
-                self.player1.score += 1
-                winner = self.player1.name
-            except:
-                action = master_rule_dict[p2_attack][self.player1.selected_attack]
-                self.player1.score += 1
-                winner = self.player2.name
+            if p1_attack == p2_attack:
+                winner = "void"
             else:
-                winner = "voie"
+                try:
+                    action = master_rule_dict[p1_attack][p2_attack]
+                    self.player1.score += 1
+                    winner = self.player1.name
+                except:
+                    action = master_rule_dict[p2_attack][p1_attack]
+                    self.player2.score += 1
+                    winner = self.player2.name
             if winner == "void":
-                print("\nYou both chose " + p1_attack +". This round is a tie")
+                print("\nYou both chose " + p1_attack +". This round is a tie.")
+            elif winner == self.player1.name:
+                print("\n{}{}{}. {} wins!".format(p1_attack,action,p2_attack,winner))
+            else:
+                print("\n{}{}{}. {} wins!".format(p2_attack,action,p1_attack,winner))
+            time.sleep(3)
+            print('\nCurrent Score: \n' + self.player1.name + ' : ' + str(self.player1.score) + '\n' + self.player2.name + ''' : ''' + str(self.player2.score))
+            time.sleep(3)
+        if self.player1.score > self.player2.score:
+            winner = self.player1.name
+            score = str(self.player1.score)
+        else:
+            winner = self.player2.name
+            score = str(self.player2.score)
+        
+        print("{} won {} games out of {}".format(winner,score,self.rounds))
 
