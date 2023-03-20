@@ -9,6 +9,17 @@ master_rule_dict = {"Rock":{"Scissors":" Crushes ","Lizard":" Crushes "},
                     "Spock":{"Scissors":" Smashes ", "Rock": " Vaporizes "}
                     }
 
+def input_number(message):
+    while True:
+        try:
+            user_input = int(input(message))
+        except ValueError:
+            print("Invalid Entry")
+            continue
+        else:
+            return user_input
+
+
 class Game:
     def __init__(self):
         self.intro()
@@ -20,12 +31,7 @@ class Game:
         print("\nHello and Welcome to ROCK, PAPER, SCISSORS, LIZARD, SPOCK!")
     
     def number_of_humans(self):
-        try:
-            human_count = min(int(input("\nPlease enter number of humans (0|1|2): ")),2)
-        except:
-            print("Invalid Entry. Please type only either 1, 2 0r 3")
-            human_count = 0
-            self.number_of_humans()
+        human_count = min(input_number("\nPlease enter number of humans (0|1|2): "),2)
         if human_count == 0:
             self.player1 = AI()
             self.player2 = AI()
@@ -42,11 +48,7 @@ class Game:
         return player_list
     
     def return_rounds(self):
-        try:
-            number_of_rounds = int(input("\nHow many rounds would you like to play?: "))
-        except:
-            print("Invalid Entry")
-            self.rounds
+        number_of_rounds = max(input_number("\nHow many rounds would you like to play? (Please choose an odd number): "),3)
         return number_of_rounds
     
     def print_game_rules(self):
@@ -80,11 +82,13 @@ Best out of ''' + str(self.rounds) + ''' wins.''')
         tie_counter = 0
         while self.players[0].score < self.rounds/2 and self.players[1].score < self.rounds/2:
             round_counter += 1
-            print('\nRound ' + str(round_counter))
+            print('\nROUND ' + str(round_counter))
             self.player1.choose_attack()
             self.player2.choose_attack()
             p1_attack = self.player1.selected_attack
             p2_attack = self.player2.selected_attack
+            print('\n{} chose {}'.format(self.player1.name, p1_attack))
+            print('\n{} chose {}'.format(self.player2.name, p2_attack))
             if p1_attack == p2_attack:
                 winner = "void"
                 tie_counter += 1

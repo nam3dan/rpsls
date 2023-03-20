@@ -1,6 +1,7 @@
 # rpsls
-Rock, Paper, Scissors, Lizard, Spock
+<h1>Rock, Paper, Scissors, Lizard, Spock</h1>
 
+<h3>Project Goals</h3>
 <ul>
 <li>(5 points): make at least 10 commits with descriptive messages.</li>
 <li>(15 points): find a way to properly incorporate inheritance into my game.</li>
