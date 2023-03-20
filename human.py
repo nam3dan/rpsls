@@ -1,14 +1,15 @@
 from player import Player
 
 class Human(Player):
-    def __init__(self):
+    def __init__(self, temp_identity):
         super().__init__()
-        self.name = input("Please Enter your name Human!:  ").title()
+        self.temp_identity = temp_identity
+        self.name = input("\nPlease Enter your name, " + self.temp_identity + ":  ").title()
     
     def choose_attack(self):
         try:
-            print("\nPlease select an attack:")
-            attack = input('''\n1.Rock 
+            print("\n"+self.name+", please select an attack:")
+            attack = input('''\n1. Rock 
 2. Paper
 3. Scissors
 4. Lizard
