@@ -48,7 +48,7 @@ class Game:
         return player_list
     
     def return_rounds(self):
-        number_of_rounds = max(input_number("\nHow many rounds would you like to play? (Please choose an odd number): "),3)
+        number_of_rounds = max(input_number("\nHow many rounds would you like to play? : "),3)
         return number_of_rounds
     
     def print_game_rules(self):
@@ -117,5 +117,5 @@ Best out of ''' + str(self.rounds) + ''' wins.''')
             winner = self.player2.name
             score = str(self.player2.score)
         
-        print("\n{} WINS!!!!! {} won {} games out of {}. There were {} ties and {} total rounds.".format(winner.upper(),winner,score,self.rounds, tie_counter, round_counter))
+        print("\n{} WINS!!!!! {} won {} games out of {}. There were {} ties and {} total rounds.\n".format(winner.upper(),winner,score,self.rounds, tie_counter, round_counter))
 
